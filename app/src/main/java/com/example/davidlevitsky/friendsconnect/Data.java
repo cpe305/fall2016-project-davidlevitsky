@@ -14,11 +14,11 @@ public class Data {
 		this.currentDay = currentDay;
 	}
 	
-	public void addEvent(Event event) {
-		events.add(event);
+	public void addEvent(Event event, int index) {
+		events.add(index, event);
 	}
 	
-	public void removeEvent(Event event) {
-		events.remove(event);
+	public void removeEvent(int index) {
+		events.remove(index);
 	}
 }
