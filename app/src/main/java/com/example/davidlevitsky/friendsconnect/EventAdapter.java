@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 /**
  * Created by davidlevitsky on 10/16/16.
+ * This class is a custom Array Adapter to create a graphical interface
+ * to view events.
  */
 public class EventAdapter extends ArrayAdapter<Event>{
     public EventAdapter(Context context, ArrayList<Event> eventsList) {
@@ -33,7 +35,6 @@ public class EventAdapter extends ArrayAdapter<Event>{
         TextView tvEventName = (TextView)convertView.findViewById(R.id.tvAdapterEventName);
         // Populate the data into the template view using the data object
         tvEventName.setText(event.getName());
-       // tvName.setText(action.nameOfPerson);
         // Return the completed view to render on screen
         return convertView;
     }

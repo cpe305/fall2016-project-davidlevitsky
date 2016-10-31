@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/top_panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:text="placeholder"
+            android:id="@+id/etEventName"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/tvEventName"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvEventName" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,33 +29,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:id="@+id/textView"
-            android:layout_below="@+id/editText"
+            android:id="@+id/tvDate"
+            android:layout_below="@+id/etEventName"
             android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
-            android:layout_below="@+id/textView"
+            android:id="@+id/etDate"
+            android:layout_below="@+id/tvDate"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-            android:text="date placeholder"
-            android:gravity="center_horizontal" />
+            android:inputType="date"
+            android:gravity="center_horizontal"
+            android:hint="mm/dd/year" />
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/bottom_panel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="From:"
+        android:id="@+id/tvFromTime"
+        android:textSize="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etDate"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/button"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="To:"
+        android:id="@+id/tvToTime"
+        android:textSize="20dp"
+        android:layout_below="@+id/tvFromTime"
+        android:layout_alignParentStart="true"
+        android:paddingTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/etFromTime"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/tvFromTime"
+        android:layout_alignBottom="@+id/tvFromTime"
+        android:hint="hh:mm"
+        android:gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/etToTime"
+        android:layout_below="@+id/etFromTime"
+        android:layout_alignStart="@+id/etFromTime"
+        android:layout_alignBottom="@+id/tvToTime"
+        android:gravity="center_horizontal"
+        android:hint="hh:mm" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/bSave"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

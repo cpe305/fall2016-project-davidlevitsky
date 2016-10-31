@@ -35,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CreateEventActivity.class);
                 //pass data from selected data to onCreateActivity
+                intent.putExtra("date", "fooDate");
                 startActivity(intent);
             }
         });
     }
+
+
 
 
 
