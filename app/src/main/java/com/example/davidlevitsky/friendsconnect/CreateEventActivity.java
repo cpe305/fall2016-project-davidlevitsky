@@ -72,9 +72,11 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public void createNewEvent() {
         EditText etEventName = (EditText)findViewById(R.id.etEventName);
+        EditText etDateString = (EditText)findViewById(R.id.etDate);
         String name = etEventName.getText().toString();
+        String date = etDateString.getText().toString();
         Toast toast = Toast.makeText(getApplicationContext(), "creation works: " + name, Toast.LENGTH_LONG);
-        Event newEvent = new Event(name, "time", "location", "date");
+        Event newEvent = new Event(name, "time", "location", date);
         EventsList eventsList = EventsList.getInstance();
         eventsList.addEvent(newEvent);
         toast.show();

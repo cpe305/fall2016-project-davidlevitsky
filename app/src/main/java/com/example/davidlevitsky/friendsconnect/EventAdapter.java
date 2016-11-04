@@ -33,8 +33,10 @@ public class EventAdapter extends ArrayAdapter<Event>{
         }
         // Lookup view for data population
         TextView tvEventName = (TextView)convertView.findViewById(R.id.tvAdapterEventName);
+        TextView tvDate = (TextView)convertView.findViewById(R.id.tvAdapterDate);
         // Populate the data into the template view using the data object
         tvEventName.setText(event.getName());
+        tvDate.setText(event.getDate());
         // Return the completed view to render on screen
         return convertView;
     }

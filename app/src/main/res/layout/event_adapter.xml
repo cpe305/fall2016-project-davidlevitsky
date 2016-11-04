@@ -35,4 +35,15 @@
         android:layout_toRightOf="@+id/tvAdapterEventName"
         android:layout_toEndOf="@+id/tvAdapterEventName" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Date"
+        android:id="@+id/tvAdapterDate"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/cbAdapterTaskCompleted"
+        android:layout_alignBottom="@+id/cbAdapterTaskCompleted"
+        android:textSize="12sp"/>
+
 </RelativeLayout>
