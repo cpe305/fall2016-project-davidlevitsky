@@ -22,6 +22,12 @@ android {
             testCoverageEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
+        lintOptions {
+            abortOnError false
+        }
     }
 }
 
