@@ -2,6 +2,9 @@
 sonarqube {
     //noinspection GroovyAssignabilityCheck
     properties {
+        property "sonar.projectName", "Friendsconnect"
+        property "sonar.projectKey", "fall2016-project-davidlevitsky"
+        
         property "sonar.host.url", "http://smartr.cs.hm.edu:9000"
 
         property "sonar.sourceEncoding", "UTF-8"
@@ -17,5 +20,7 @@ sonarqube {
         property "sonar.jacoco.reportPath", "build/jacoco/testDebugUnitTest.exec" // path to coverage reports
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.junit.reportsPath", "build/test-results/debug" // path to junit reports
+        
+        property "sonar.exclusions", "rx.Observable"
     }
 }
