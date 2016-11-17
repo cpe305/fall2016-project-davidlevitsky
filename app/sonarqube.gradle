@@ -21,6 +21,6 @@ sonarqube {
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.junit.reportsPath", "build/test-results/debug" // path to junit reports
         
-        property "sonar.exclusions", "rx.Observable"
+        property "sonar.exclusions", "rx.Observable" // Skip these Files
     }
 }
