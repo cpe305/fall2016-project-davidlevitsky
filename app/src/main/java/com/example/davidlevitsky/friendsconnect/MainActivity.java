@@ -10,24 +10,54 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
     private String currentDate;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RealmSetup();
         setup();
 
     }
 
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+
+    public void RealmSetup() {
+        Realm.init(getBaseContext());
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        realm = Realm.getDefaultInstance();
+        Toast.makeText(getBaseContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
+
+    }
+
     public void setup() {
-        ArrayList<Event> eventsList = EventsList.getInstance().getEventsList();
-       // eventsList.add(new Event("name", "time", "location", "date"));
+        RealmResults<Event> results = realm.where(Event.class).findAll();
+        ArrayList<Event> eventsList = new ArrayList<Event>();
+        for (Event e : results) {
+            eventsList.add(e);
+        }
+
         EventAdapter mEventAdapter = new EventAdapter(this, eventsList);
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);

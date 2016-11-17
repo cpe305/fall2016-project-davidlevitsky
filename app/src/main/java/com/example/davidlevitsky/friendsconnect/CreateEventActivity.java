@@ -14,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 /**
  * Created by davidlevitsky on 10/24/16.
  * This class is responsible for a full Activity and is used to
@@ -24,15 +28,27 @@ public class CreateEventActivity extends AppCompatActivity {
     private CheckBox timeCheckbox;
     private EditText fromTime;
     private EditText toTime;
+    private EditText etEventName;
+    private EditText etDateString;
+    private EditText etLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        Realm.init(getBaseContext());
+        Realm realm = Realm.getDefaultInstance();
+
         timeCheckbox = (CheckBox)findViewById(R.id.checkBox);
         fromTime = (EditText)findViewById(R.id.etFromTime);
         toTime = (EditText)findViewById(R.id.etToTime);
+        etDateString = (EditText)findViewById(R.id.etDate);
+        etEventName = (EditText)findViewById(R.id.etEventName);
+
         setup();
+        realm.close();
+
     }
 
     public void setup() {
@@ -65,20 +81,30 @@ public class CreateEventActivity extends AppCompatActivity {
         }
         );
         String currentDate = getIntent().getStringExtra("date");
-        EditText etDate = (EditText)findViewById(R.id.etDate);
-        etDate.setText(currentDate);
+        etDateString.setText(currentDate);
 
     }
 
     public void createNewEvent() {
-        EditText etEventName = (EditText)findViewById(R.id.etEventName);
-        EditText etDateString = (EditText)findViewById(R.id.etDate);
-        String name = etEventName.getText().toString();
-        String date = etDateString.getText().toString();
+
+        final String name = etEventName.getText().toString();
+        final String date = etDateString.getText().toString();
+
         Toast toast = Toast.makeText(getApplicationContext(), "creation works: " + name, Toast.LENGTH_LONG);
-        Event newEvent = new Event(name, "time", "location", date);
-        EventsList eventsList = EventsList.getInstance();
-        eventsList.addEvent(newEvent);
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Event event = realm.createObject(Event.class);
+                event.setName(name);
+                event.setDate(date);
+                event.setLocation("test location");
+                event.setFromTime(fromTime.toString());
+                event.setToTime(toTime.toString());
+
+            }
+        });
+
         toast.show();
     }
 

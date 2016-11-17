@@ -2,6 +2,7 @@ package com.example.davidlevitsky.friendsconnect;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by davidlevitsky on 10/30/16.
  * This class is a Singleton pattern and is responsible for
@@ -9,8 +10,9 @@ import java.util.ArrayList;
  * should only be one schedule, so it is important that this class
  * is a Singleton.
  */
-public class EventsList {
+public class EventsList  {
     private ArrayList<Event> eventsList;
+    private int numEvents;
     private static EventsList instance = new EventsList();
 
     private EventsList() {
@@ -26,10 +28,18 @@ public class EventsList {
     }
     public void addEvent(Event event) {
         eventsList.add(event);
+        numEvents++;
     }
 
     public void deleteEvent(Event event) {
-        eventsList.remove(event);
+        if (eventsList.contains(event)) {
+            eventsList.remove(event);
+            numEvents--;
+        }
+    }
+
+    public int getNumEvents() {
+        return this.numEvents;
     }
 
 }

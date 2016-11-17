@@ -15,7 +15,7 @@ public class ExampleUnitTest {
     Contact contact;
 
     @Before
-    public void makeUser() {
+    public void makeContact() {
         contact = new Contact("name", "e-mail");
     }
 

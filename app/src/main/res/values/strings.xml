@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FriendsConnect</string>
+    <string name="from_string">From:</string>
+    <string name="to_string">To:</string>
+    <string name="event_name">Event Name</string>
+    <string name="date">Date</string>
+    <string name="save">Save</string>
+    <string name="all_day">All Day</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="event">Event</string>
 </resources>
