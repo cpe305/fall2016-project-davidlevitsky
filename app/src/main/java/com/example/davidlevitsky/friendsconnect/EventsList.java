@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class EventsList  {
     private ArrayList<Event> eventsList;
-    private int numEvents;
+    private int numEvents = 0;
     private static EventsList instance = new EventsList();
 
     private EventsList() {
