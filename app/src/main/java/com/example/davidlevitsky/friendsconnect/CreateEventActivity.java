@@ -90,6 +90,8 @@ public class CreateEventActivity extends AppCompatActivity {
         final String name = etEventName.getText().toString();
         final String date = etDateString.getText().toString();
 
+
+
         Toast toast = Toast.makeText(getApplicationContext(), "creation works: " + name, Toast.LENGTH_LONG);
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
@@ -101,9 +103,12 @@ public class CreateEventActivity extends AppCompatActivity {
                 event.setLocation("test location");
                 event.setFromTime(fromTime.toString());
                 event.setToTime(toTime.toString());
+                EventsList.getInstance().addEvent(event);
+
 
             }
         });
+
 
         toast.show();
     }

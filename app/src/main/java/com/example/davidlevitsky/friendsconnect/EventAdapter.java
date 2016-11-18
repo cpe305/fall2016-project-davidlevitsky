@@ -4,24 +4,40 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by davidlevitsky on 10/16/16.
  * This class is a custom Array Adapter to create a graphical interface
  * to view events.
  */
-public class EventAdapter extends ArrayAdapter<Event>{
+public class EventAdapter extends ArrayAdapter<Event> {
+
+    Realm realm;
+    ArrayList<Event> eventsList;
+
     public EventAdapter(Context context, ArrayList<Event> eventsList) {
         super(context, 0, eventsList);
+        this.eventsList = eventsList;
 
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        RealmSetup();
+
         // Get the data item for this position
         Event event = getItem(position);
         if (event == null) {
@@ -31,6 +47,10 @@ public class EventAdapter extends ArrayAdapter<Event>{
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_adapter, parent, false);
         }
+        final ImageButton ibDeleteEvent = (ImageButton) convertView.findViewById(R.id.ibDeleteEvent);
+        ibDeleteEvent.setTag(position);
+
+
         // Lookup view for data population
         TextView tvEventName = (TextView)convertView.findViewById(R.id.tvAdapterEventName);
         TextView tvDate = (TextView)convertView.findViewById(R.id.tvAdapterDate);
@@ -38,7 +58,23 @@ public class EventAdapter extends ArrayAdapter<Event>{
         tvEventName.setText(event.getName());
         tvDate.setText(event.getDate());
         // Return the completed view to render on screen
+
+        ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
+
+        //not working
+
+
         return convertView;
+    }
+
+    public void RealmSetup() {
+        Realm.init(getContext());
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        realm = Realm.getDefaultInstance();
+     //   Toast.makeText(getContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
+
     }
 
 }

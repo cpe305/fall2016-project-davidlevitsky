@@ -1,6 +1,7 @@
 package com.example.davidlevitsky.friendsconnect;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String currentDate;
     private Realm realm;
+    private EventAdapter mEventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setup();
 
     }
+
 
     public void onDestroy() {
         super.onDestroy();
@@ -47,18 +50,23 @@ public class MainActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(realmConfiguration);
 
         realm = Realm.getDefaultInstance();
-        Toast.makeText(getBaseContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getBaseContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
 
     }
 
     public void setup() {
         RealmResults<Event> results = realm.where(Event.class).findAll();
-        ArrayList<Event> eventsList = new ArrayList<Event>();
-        for (Event e : results) {
-            eventsList.add(e);
-        }
 
-        EventAdapter mEventAdapter = new EventAdapter(this, eventsList);
+//
+
+        EventsList eventsList = EventsList.getInstance();
+        if (eventsList.getNumEvents() == 0) {
+
+            for (Event e : results) {
+                eventsList.addEvent(e);
+            }
+        }
+        mEventAdapter = new EventAdapter(this, eventsList.getEventsList());
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);
 
@@ -84,14 +92,33 @@ public class MainActivity extends AppCompatActivity {
                 currentDate = String.valueOf(month + "/" + dayOfMonth + "/" + year);
             }
         });
+        //refresh the adapter at the end of setting up.
+        //list in data could have changed because we could have come from CreateEventActivity
+        mEventAdapter.notifyDataSetChanged();
+
+
+
     }
 
+    
+    public void onClickDelete(View view) {
+        int position = (Integer)view.getTag();
+        Event event = EventsList.getInstance().getEventsList().get(position);
+        final String eventName = event.getName();
+        mEventAdapter.remove(event);
+        mEventAdapter.notifyDataSetChanged();
+        final RealmObject objectToDelete = realm.where(Event.class).equalTo("name", event.getName()).findFirst();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                objectToDelete.deleteFromRealm();
+                Toast toast = Toast.makeText(getApplicationContext(), "Event " + eventName + " removed.", Toast.LENGTH_SHORT);
+                toast.show();
 
+            }
+        });
 
-
-
-
-
+    }
 
 
 }
