@@ -15,15 +15,19 @@ public class Event extends RealmObject {
 	private String location;
 	private String date;
     private String name;
+    private String imageUrl;
+    private String rating;
+    private String address;
 
     public Event() {}
 
-	public Event(String name, String fromTime, String toTime, String location, String date) {
+	public Event(String name, String fromTime, String toTime, String location, String date, String imageUrl) {
         this.name = name;
 		this.fromTime = fromTime;
         this.toTime = toTime;
 		this.location = location;
 		this.date = date;
+        this.imageUrl = imageUrl;
 	}
 
     public void setName(String name) {
@@ -67,6 +71,32 @@ public class Event extends RealmObject {
     public String getDate() {
         return this.date;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
 }
 

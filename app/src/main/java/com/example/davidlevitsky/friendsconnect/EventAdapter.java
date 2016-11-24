@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,14 +52,26 @@ public class EventAdapter extends ArrayAdapter<Event> {
         }
         final ImageButton ibDeleteEvent = (ImageButton) convertView.findViewById(R.id.ibDeleteEvent);
         ibDeleteEvent.setTag(position);
+        ImageButton ibViewInfo = (ImageButton)convertView.findViewById(R.id.ibAdapterViewEventDetails);
+        ibViewInfo.setTag(position);
 
 
         // Lookup view for data population
         TextView tvEventName = (TextView)convertView.findViewById(R.id.tvAdapterEventName);
         TextView tvDate = (TextView)convertView.findViewById(R.id.tvAdapterDate);
+        TextView tvFromTime = (TextView)convertView.findViewById(R.id.tvFromTime);
+        TextView tvLocation = (TextView)convertView.findViewById(R.id.tvLocation);
+        TextView tvToTime = (TextView)convertView.findViewById(R.id.tvToTime);
+        ImageView iv = (ImageView)convertView.findViewById(R.id.ivAdapterEventImage);
+
+
         // Populate the data into the template view using the data object
         tvEventName.setText(event.getName());
         tvDate.setText(event.getDate());
+        tvLocation.setText(event.getLocation());
+        tvFromTime.setText("Start Time: " + event.getFromTime());
+        tvToTime.setText("End Time: " + event.getToTime());
+        Picasso.with(getContext()).load(event.getImageUrl()).into(iv);
         // Return the completed view to render on screen
 
         //ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);

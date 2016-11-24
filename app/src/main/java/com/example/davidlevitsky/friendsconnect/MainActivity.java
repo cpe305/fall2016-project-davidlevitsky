@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity {
         RealmSetup();
         setup();
         ArrayList<String> temp = getNameEmailDetails();
-        for (String s : temp) {
-            Toast toast = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG);
-            toast.show();
-        }
+
 
 
     }
@@ -89,6 +86,15 @@ public class MainActivity extends AppCompatActivity {
         mEventAdapter = new EventAdapter(this, eventsList.getEventsList());
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //do nothing
+            }
+
+
+        });
+
 
         CalendarView calendarView = (CalendarView)findViewById(R.id.mCalendarView);
 
@@ -120,8 +126,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    
+
+    public void onClickViewDetails(View view) {
+        int position = (Integer)view.getTag();
+        Event event = EventsList.getInstance().getEventsList().get(position);
+        Intent i = new Intent(MainActivity.this, DisplayEventInfoActivity.class);
+        // put "extras" into the bundle for access in the second activity
+        i.putExtra("name", event.getName());
+        i.putExtra("location", event.getLocation());
+        i.putExtra("address", event.getAddress());
+        i.putExtra("rating", event.getRating());
+        i.putExtra("fromTime", event.getFromTime());
+        i.putExtra("toTime", event.getToTime());
+        i.putExtra("url", event.getImageUrl());
+        i.putExtra("participant", "John Doe");
+        // brings up the second activity
+        startActivity(i);
+    }
+
     public void onClickDelete(View view) {
+        if (view == null || view.getTag() == null) {
+            return;
+        }
         int position = (Integer)view.getTag();
         Event event = EventsList.getInstance().getEventsList().get(position);
         final String eventName = event.getName();

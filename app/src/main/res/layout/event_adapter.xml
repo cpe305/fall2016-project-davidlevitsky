@@ -1,53 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:clickable="true"
-    android:onClick="onClickDelete">
+>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Event"
-        android:id="@+id/tvAdapterEventName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="12sp" />
-
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:id="@+id/ibDeleteEvent"
-        android:layout_alignParentTop="true"
-        android:background="@android:drawable/ic_delete"
-        android:layout_alignBottom="@+id/tvAdapterNameOfPerson"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClickDelete" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvAdapterNameOfPerson"
-        android:textSize="12sp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tvAdapterEventName"
-        android:layout_toEndOf="@+id/tvAdapterEventName" />
 
-    <TextView
+       />
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Date"
-        android:id="@+id/tvAdapterDate"
+        android:clickable="true"
+        android:id="@+id/ibDeleteEvent"
+        android:background="@android:drawable/ic_delete"
+        android:onClick="onClickDelete"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/ibDeleteEvent"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        />
+
+    <TextView
+        android:text="Event Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvAdapterEventName"
+        android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/ibDeleteEvent"
-        android:textSize="12sp"/>
+        android:layout_toStartOf="@+id/ibDeleteEvent"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/black"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAdapterNameOfPerson"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tvAdapterDate"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif" />
+
+    <TextView
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAdapterDate"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tvLocation"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="StartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLocation"
+        android:layout_toEndOf="@+id/tvAdapterNameOfPerson"
+        android:id="@+id/tvFromTime"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="EndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvToTime"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/tvFromTime"
+        android:layout_toEndOf="@+id/tvAdapterNameOfPerson" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/ivAdapterEventImage"
+        android:adjustViewBounds="true"
+        android:maxHeight="100dp"
+        android:layout_below="@+id/tvToTime"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/ibAdapterViewEventDetails" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:id="@+id/ibAdapterViewEventDetails"
+        android:background="@color/colorPrimary"
+        android:layout_alignBottom="@+id/ivAdapterEventImage"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:onClick="onClickViewDetails" />
 
 </RelativeLayout>

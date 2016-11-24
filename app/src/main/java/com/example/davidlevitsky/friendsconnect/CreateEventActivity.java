@@ -1,5 +1,6 @@
 package com.example.davidlevitsky.friendsconnect;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,8 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText etLocation;
     private Button bSearchEvent;
     private EditText etAddress;
+    private String imageURL;
+    private String rating;
     private final int REQUEST_CODE = 200; //arbitrary request code to receive data from a launched activity
 
 
@@ -75,7 +78,9 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             //After user saves an event, confirm it and take them back to main page
             public void onClick(View v) {
-                createNewEvent();
+                if (!createNewEvent()) {
+                    return;
+                }
                 Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
                 Toast toast = Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT);
                 toast.show();
@@ -121,13 +126,56 @@ public class CreateEventActivity extends AppCompatActivity {
             // Toast the name to display temporarily on screen
             etLocation.setText(data.getStringExtra("name"));
             etAddress.setText(data.getStringExtra("location"));
+            imageURL = data.getStringExtra("url");
+            rating = data.getStringExtra("rating");
         }
     }
 
-    public void createNewEvent() {
+    public boolean createNewEvent() {
 
         final String name = etEventName.getText().toString();
         final String date = etDateString.getText().toString();
+        final String location = etLocation.getText().toString();
+        final String startTime = fromTime.getText().toString();
+        final String endTime = toTime.getText().toString();
+        boolean success = true;
+
+        // Light error checking
+        // Must be done on case-by-case basis to provide accurrate
+        // error message to the user.
+        Toast toast;
+        Context context = getApplicationContext();
+
+        if (name.isEmpty()) {
+            toast = Toast.makeText(context, "Please enter an event name", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+        }
+
+        else if (date.isEmpty()) {
+            toast = Toast.makeText(context, "Please enter a date", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+        }
+
+        else if (location.isEmpty()) {
+            toast = Toast.makeText(context, "Please enter a location", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+        }
+
+        else if (startTime.isEmpty()) {
+            toast = Toast.makeText(context, "Please enter a start time", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+        }
+
+        else if (endTime.isEmpty()) {
+            toast = Toast.makeText(context, "Please enter an end time", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+
+        }
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
@@ -136,14 +184,20 @@ public class CreateEventActivity extends AppCompatActivity {
                 Event event = realm.createObject(Event.class);
                 event.setName(name);
                 event.setDate(date);
-                event.setLocation("test location");
-                event.setFromTime(fromTime.toString());
-                event.setToTime(toTime.toString());
+                event.setLocation(etLocation.getText().toString());
+                event.setFromTime(fromTime.getText().toString());
+                event.setToTime(toTime.getText().toString());
+                event.setRating(rating);
+                event.setAddress(etAddress.getText().toString());
+                if (imageURL != null) {
+                    event.setImageUrl(imageURL);
+                }
                 EventsList.getInstance().addEvent(event);
 
 
             }
         });
+        return success;
 
 
     }

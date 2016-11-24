@@ -145,6 +145,7 @@ public class SearchEventYelpActivity extends AppCompatActivity {
         data.putExtra("name", result.getName());
         data.putExtra("location", result.getAddress());
         data.putExtra("url", result.getPictureURL());
+        data.putExtra("rating", result.getRating());
         data.putExtra("code", 200); // ints work too
         // Activity finished ok, return the data
         setResult(RESULT_OK, data); // set result code and bundle data for response

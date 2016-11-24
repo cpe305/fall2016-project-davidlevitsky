@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,7 +26,8 @@
             android:label="@string/title_activity_search_event_yelp"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".YelpResultInfoActivity"></activity>
+        <activity android:name=".YelpResultInfoActivity" />
+        <activity android:name=".DisplayEventInfoActivity"></activity>
     </application>
 
 </manifest>
