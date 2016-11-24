@@ -42,10 +42,8 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText etEventName;
     private EditText etDateString;
     private EditText etLocation;
-    private final String CONSUMER_KEY= "ZvHAdI9vVMFywK193WST5g";
-    private final String CONSUMER_SECRET = "WacH3p5K75bFz2YL6ooJKDGFIlU";
-    private final String TOKEN = "P0QAwcTA6wxRt77viZno2Ov8wDCzWtAR";
-    private final String TOKEN_SECRET = "xcRAN6Xn69pQKHy008HJyYaeTGM";
+    private Button bSearchEvent;
+    private final int REQUEST_CODE = 200; //arbitrary request code to receive data from a launched activity
 
 
     @Override
@@ -60,42 +58,10 @@ public class CreateEventActivity extends AppCompatActivity {
         toTime = (EditText)findViewById(R.id.etToTime);
         etDateString = (EditText)findViewById(R.id.etDate);
         etEventName = (EditText)findViewById(R.id.etEventName);
+        bSearchEvent = (Button)findViewById(R.id.bSearchEvent);
 
         setup();
         realm.close();
-        // (consumerKey, consumerSecret, token, tokenSecret
-        YelpAPIFactory apiFactory = new YelpAPIFactory(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
-        YelpAPI yelpAPI = apiFactory.createAPI();
-        Map<String, String> params = new HashMap<>();
-
-    // general params
-        params.put("term", "food");
-        params.put("limit", "3");
-
-    // locale params
-        params.put("lang", "fr");
-        // StackOverflow fix to allow Network access from Main thread
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        Call<SearchResponse> call = yelpAPI.search("San Francisco", params);
-
-        try {
-            SearchResponse searchResponse = call.execute().body();
-            int totalNumberOfResult = searchResponse.total();  // 3
-            ArrayList<Business> businesses = searchResponse.businesses();
-            String businessName = businesses.get(0).name();  // "JapaCurry Truck"
-            Double rating = businesses.get(0).rating();  // 4.0
-            Toast toast2 = Toast.makeText(getApplicationContext(), "name: " + businessName + "rating: " + Double.toString(rating), Toast.LENGTH_LONG);
-            toast2.show();
-        }
-        catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
 
     }
 
@@ -128,6 +94,14 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         }
         );
+        bSearchEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateEventActivity.this, SearchEventYelpActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+
+        });
         String currentDate = getIntent().getStringExtra("date");
         etDateString.setText(currentDate);
 

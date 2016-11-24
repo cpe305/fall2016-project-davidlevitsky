@@ -22,9 +22,9 @@
             android:text="@string/event_name"
             android:id="@+id/tvEventName"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -92,14 +92,6 @@
         android:gravity="center_horizontal"
         android:hint="hh:mm" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/bSave"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,5 +108,47 @@
         android:layout_toEndOf="@+id/etFromTime"
         android:layout_alignBottom="@+id/etFromTime"
         android:checked="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etLocation"
+        android:layout_below="@+id/spinner"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Location"
+        android:gravity="center_vertical|center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/bSave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/checkBox"
+        android:layout_marginEnd="15dp" />
+
+    <Button
+        android:text="SEARCH EVENT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/tvToTime"
+        android:id="@+id/bSearchEvent" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/etLocation"
+        android:layout_marginTop="12dp"
+        android:id="@+id/etAddress"
+        android:layout_alignEnd="@+id/checkBox"
+        android:layout_alignParentStart="true"
+        android:hint="Address"
+        android:gravity="center_vertical|center_horizontal" />
 
 </RelativeLayout>

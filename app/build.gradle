@@ -47,20 +47,22 @@ android {
 }
 
 jacocoAndroidUnitTestReport {
-        csv.enabled false
-        html.enabled true
-        xml.enabled true
-    }
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
+}
 
-        jacoco {
-                toolVersion = "0.7.7.201606060606"
-            }
+jacoco {
+    toolVersion = "0.7.7.201606060606"
+}
 
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.yelp.clientlib:yelp-android:2.0.0'
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:design:24.2.0'
+    testCompile 'junit:junit:4.12'
 }

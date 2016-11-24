@@ -18,9 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateEventActivity">
-
-        </activity>
+        <activity android:name=".CreateEventActivity"></activity>
+        <activity
+            android:name=".SearchEventYelpActivity"
+            android:label="@string/title_activity_search_event_yelp"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

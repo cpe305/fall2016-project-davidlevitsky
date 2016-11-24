@@ -8,4 +8,5 @@
     <string name="all_day">All Day</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="event">Event</string>
+    <string name="title_activity_search_event_yelp">SearchEventYelpActivity</string>
 </resources>
