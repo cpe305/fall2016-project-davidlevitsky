@@ -9,4 +9,5 @@
     <string name="upcoming_events">Upcoming Events</string>
     <string name="event">Event</string>
     <string name="title_activity_search_event_yelp">SearchEventYelpActivity</string>
+    <string name="permission_rationale">permission</string>
 </resources>
