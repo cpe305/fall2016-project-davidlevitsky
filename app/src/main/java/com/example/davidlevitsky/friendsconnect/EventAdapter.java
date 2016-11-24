@@ -59,7 +59,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         tvDate.setText(event.getDate());
         // Return the completed view to render on screen
 
-        ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
+        //ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
 
         //not working
 

@@ -47,14 +47,6 @@
         android:hint="Enter a Location"
         android:gravity="center_horizontal" />
 
-    <Button
-        android:text="Search!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/bYelpSearch" />
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,5 +54,13 @@
         android:layout_above="@+id/bYelpSearch"
         android:layout_alignParentEnd="true"
         android:id="@+id/lvYelpResults" />
+
+    <Button
+        android:text="Search!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bYelpSearch"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

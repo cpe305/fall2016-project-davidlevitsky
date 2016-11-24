@@ -43,6 +43,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText etDateString;
     private EditText etLocation;
     private Button bSearchEvent;
+    private EditText etAddress;
     private final int REQUEST_CODE = 200; //arbitrary request code to receive data from a launched activity
 
 
@@ -59,11 +60,14 @@ public class CreateEventActivity extends AppCompatActivity {
         etDateString = (EditText)findViewById(R.id.etDate);
         etEventName = (EditText)findViewById(R.id.etEventName);
         bSearchEvent = (Button)findViewById(R.id.bSearchEvent);
+        etLocation = (EditText)findViewById(R.id.etLocation);
+        etAddress = (EditText)findViewById(R.id.etAddress);
 
         setup();
         realm.close();
 
     }
+
 
     public void setup() {
         Button btnSave = (Button) findViewById(R.id.bSave);
@@ -107,13 +111,24 @@ public class CreateEventActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+           // String name = data.getExtras().getString("name");
+            //int code = data.getExtras().getInt("position", 0);
+            // Toast the name to display temporarily on screen
+            etLocation.setText(data.getStringExtra("name"));
+            etAddress.setText(data.getStringExtra("location"));
+        }
+    }
+
     public void createNewEvent() {
 
         final String name = etEventName.getText().toString();
         final String date = etDateString.getText().toString();
 
-
-        Toast toast = Toast.makeText(getApplicationContext(), "creation works: " + name, Toast.LENGTH_LONG);
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override

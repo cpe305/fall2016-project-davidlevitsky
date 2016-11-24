@@ -1,6 +1,7 @@
 package com.example.davidlevitsky.friendsconnect;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +33,15 @@ public class YelpResultAdapter extends ArrayAdapter<YelpResult> {
     private TextView tvYelpResultName;
     private TextView tvYelpResultRating;
     private ImageView image;
+    private ImageButton ibInfo;
+    private ImageButton ibSelect;
+    private Context context;
+
 
     public YelpResultAdapter(Context context, ArrayList<YelpResult> resultsList) {
         super(context, 0, resultsList);
         this.resultsList = resultsList;
+        this.context = context;
     }
 
 
@@ -58,15 +64,34 @@ public class YelpResultAdapter extends ArrayAdapter<YelpResult> {
         tvYelpResultName = (TextView)convertView.findViewById(R.id.tvYelpResultName);
         tvYelpResultRating = (TextView)convertView.findViewById(R.id.tvYelpResultRating);
         image = (ImageView)convertView.findViewById(R.id.ivYelpImage);
+        ibInfo = (ImageButton)convertView.findViewById(R.id.ibYelpResultInfo);
+        ibSelect = (ImageButton)convertView.findViewById(R.id.ibYelpResultSelect);
+        ibSelect.setTag(position);
+        ibInfo.setTag(position);
         // Populate the data into the template view using the data object
         tvYelpResultName.setText(result.getName());
-        tvYelpResultRating.setText(result.getRating());
+        tvYelpResultRating.setText("Rating (out of 5): " + result.getRating());
         // Return the completed view to render on screen
-        Picasso.with(getContext()).load(result.getPictureURL()).into(image);
+        String url = result.getPictureURL();
+        //replace end of url from ms.jpg to ls.jpg so image has better resolution
+        url = url.replace("ms.jpg", "ls.jpg");
+        Picasso.with(getContext()).load(url).into(image);
+
+//        ibInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(getContext(), YelpResultInfoActivity.class);
+//                context.startActivity(i);
+//
+//            }
+//        });
+
 
 
         return convertView;
     }
+
+
 
     // provides a way to access the Realm Database
     public void RealmSetup() {

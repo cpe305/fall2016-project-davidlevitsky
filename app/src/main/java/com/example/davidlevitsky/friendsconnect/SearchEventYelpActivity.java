@@ -1,5 +1,7 @@
 package com.example.davidlevitsky.friendsconnect;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -7,8 +9,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,12 +32,15 @@ public class SearchEventYelpActivity extends AppCompatActivity {
     private final String CONSUMER_SECRET = "WacH3p5K75bFz2YL6ooJKDGFIlU";
     private final String TOKEN = "P0QAwcTA6wxRt77viZno2Ov8wDCzWtAR";
     private final String TOKEN_SECRET = "xcRAN6Xn69pQKHy008HJyYaeTGM";
+    public final int REQUEST_CODE = 200;
     private Button bSearch;
+    private Button bSaveYelpEvent;
     private EditText etYelpSearchTerm;
     private EditText etYelpLocation;
     ArrayList<YelpResult> yelpResultsList;
     ListView lvYelpResults;
     YelpResultAdapter mYelpResultsAdapter;
+    public static int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,6 @@ public class SearchEventYelpActivity extends AppCompatActivity {
         lvYelpResults = (ListView)findViewById(R.id.lvYelpResults);
         mYelpResultsAdapter = new YelpResultAdapter(this, yelpResultsList);
         lvYelpResults.setAdapter(mYelpResultsAdapter);
-
         bSearch = (Button)findViewById(R.id.bYelpSearch);
         etYelpSearchTerm = (EditText)findViewById(R.id.etYelpSearchTerm);
         etYelpLocation = (EditText)findViewById(R.id.etYelpLocation);
@@ -57,11 +63,25 @@ public class SearchEventYelpActivity extends AppCompatActivity {
         bSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //clear previous search results
+                yelpResultsList.clear();
                 String searchTerm = etYelpSearchTerm.getText().toString();
                 String location = etYelpLocation.getText().toString();
                 search(searchTerm, location);
             }
         });
+
+        lvYelpResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView parent, View v, int position, long id){
+
+                Toast toast = Toast.makeText(getApplicationContext(), "HI", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+        });
+
+
     }
 
     public void search(String searchTerm, String location) {
@@ -96,10 +116,15 @@ public class SearchEventYelpActivity extends AppCompatActivity {
             for (Business b : businesses) {
                 String name = b.name();
                 String rating = Double.toString(b.rating());
-                String address = b.location().crossStreets();
+                ArrayList<String> addressList = b.location().address();
+                //get the street and property number
+                String address = addressList.get(0);
                 String url = b.imageUrl();
+                String numReviews = Integer.toString(b.reviewCount());
+                String description = b.snippetText();
+                String mobileURL = b.mobileUrl();
 
-                YelpResult res = new YelpResult(name, rating, address, url);
+                YelpResult res = new YelpResult(name, rating, address, url, numReviews, description, mobileURL);
                 yelpResultsList.add(res);
             }
             mYelpResultsAdapter.notifyDataSetChanged();
@@ -108,6 +133,39 @@ public class SearchEventYelpActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
+    }
+
+    public void onSubmit(View v) {
+        // EditText etName = (EditText) findViewById(R.id.name);
+        // Prepare data intent
+        Intent data = new Intent();
+        int position = (Integer)v.getTag();
+        YelpResult result = yelpResultsList.get(position);
+        // Pass relevant data back as a result
+        data.putExtra("name", result.getName());
+        data.putExtra("location", result.getAddress());
+        data.putExtra("url", result.getPictureURL());
+        data.putExtra("code", 200); // ints work too
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data); // set result code and bundle data for response
+        finish(); // closes the activity, pass data to parent
+    }
+
+    public void onInformationClick(View v) {
+        Intent data = new Intent(SearchEventYelpActivity.this, YelpResultInfoActivity.class);
+        int position = (Integer)v.getTag();
+        YelpResult result = yelpResultsList.get(position);
+        data.putExtra("name", result.getName());
+        data.putExtra("address", result.getAddress());
+        String url = result.getPictureURL();
+        //replace end of url from ms.jpg to ls.jpg so image has better resolution
+        url = url.replace("ms.jpg", "l.jpg");
+        data.putExtra("url", url);
+        data.putExtra("rating", result.getRating());
+        data.putExtra("description", result.getDescription());
+        data.putExtra("mobileURL", result.getMobileURL());
+        data.putExtra("numReviews", result.getNumReviews());
+        startActivity(data);
     }
 
     public EditText getEtYelpSearchTerm() {
@@ -125,6 +183,8 @@ public class SearchEventYelpActivity extends AppCompatActivity {
     public void setEtYelpLocation(EditText etYelpLocation) {
         this.etYelpLocation = etYelpLocation;
     }
+
+
 
 
 }
