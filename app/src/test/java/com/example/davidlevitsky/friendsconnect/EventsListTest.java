@@ -16,8 +16,8 @@ public class EventsListTest {
 
     @Before
     public void makeEvent() {
-        event1 = new Event("fromTime", "toTime", "location", "date", "name");
-        event2 = new Event("1", "2", "3", "4", "5");
+        event1 = new Event("fromTime", "toTime", "location", "date", "name", "");
+        event2 = new Event("1", "2", "3", "4", "5", "");
         eventsList = EventsList.getInstance();
     }
 

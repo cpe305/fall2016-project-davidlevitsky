@@ -16,7 +16,7 @@ public class EventTester {
 
     @Before
     public void makeEvent() {
-        event = new Event("fromTime", "toTime", "location", "date", "name");
+        event = new Event("fromTime", "toTime", "location", "date", "name", "");
     }
 
     @Test
