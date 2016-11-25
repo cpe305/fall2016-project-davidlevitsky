@@ -48,10 +48,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RealmSetup();
         setup();
-        ArrayList<String> temp = getNameEmailDetails();
-
-
-
+        //get list of contacts from phone by populating ContactsList singleton
+        ArrayList<String> contactList = getNameEmailDetails();
     }
 
 
@@ -196,6 +194,9 @@ public class MainActivity extends AppCompatActivity {
                 // keep unique only
                 if (emlRecsHS.add(emlAddr.toLowerCase())) {
                     emlRecs.add(emlAddr);
+                    Contact contact = new Contact(name, emlAddr);
+                    ContactsList.getInstance().addContact(contact);
+
                 }
             } while (cur.moveToNext());
         }
@@ -205,7 +206,5 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
         return emlRecs;
     }
-
-
 
 }
