@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateEventActivity" />
+        <activity android:name=".CreateEventActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".SearchEventYelpActivity"
             android:label="@string/title_activity_search_event_yelp"

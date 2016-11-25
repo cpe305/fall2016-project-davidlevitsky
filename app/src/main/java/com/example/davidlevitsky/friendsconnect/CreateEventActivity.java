@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -47,6 +48,10 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText etAddress;
     private String imageURL;
     private String rating;
+    private ContactAdapter mContactAdapter;
+    ListView lvContacts;
+    Contact selectedContact;
+    private TextView tvInvitedContact;
     private final int REQUEST_CODE = 200; //arbitrary request code to receive data from a launched activity
 
 
@@ -119,8 +124,20 @@ public class CreateEventActivity extends AppCompatActivity {
             }
 
         });
+        tvInvitedContact = (TextView)findViewById(R.id.tvInvitedContact);
         String currentDate = getIntent().getStringExtra("date");
         etDateString.setText(currentDate);
+        mContactAdapter = new ContactAdapter(this, ContactsList.getInstance().getContactsList());
+        lvContacts = (ListView) findViewById(R.id.listView);
+        lvContacts.setAdapter(mContactAdapter);
+        lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact contact = ContactsList.getInstance().getContactsList().get(position);
+                tvInvitedContact.setText(contact.getName());
+                selectedContact = contact;
+            }
+        });
 
     }
 
@@ -145,14 +162,19 @@ public class CreateEventActivity extends AppCompatActivity {
         String location = etLocation.getText().toString();
         String startTime = fromTime.getText().toString();
         String endTime = toTime.getText().toString();
-        String bodyOfEmail = "Hey!\nI'd like to invite you to my event: " + name + ". It will run from ";
+        String contactName = selectedContact.getName();
+        String contactEMail = selectedContact.geteMail();
+
+        String bodyOfEmail = "Hey " + contactName + "!\nI'd like to invite you to my event: " + name + ". It will run from ";
         bodyOfEmail += startTime + " until " + endTime + " at the following location: " + location + " on " +
                 date + ". Hope to see you there!";
+
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, "Inivtation to " + name);
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{contactEMail});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Invitation to " + name);
         i.putExtra(Intent.EXTRA_TEXT   , bodyOfEmail);
+
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
