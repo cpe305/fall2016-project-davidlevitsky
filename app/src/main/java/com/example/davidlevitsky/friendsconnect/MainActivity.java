@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Realm realm;
     private EventAdapter mEventAdapter;
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, CreateEventActivity.class);
                 //pass data from selected data to onCreateActivity
                 intent.putExtra("date", currentDate);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
@@ -147,10 +148,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         int position = (Integer)view.getTag();
+        Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT);
+        toast.show();
         Event event = EventsList.getInstance().getEventsList().get(position);
         final String eventName = event.getName();
         mEventAdapter.remove(event);
         mEventAdapter.notifyDataSetChanged();
+        EventsList.getInstance().deleteEvent(event);
         final RealmObject objectToDelete = realm.where(Event.class).equalTo("name", event.getName()).findFirst();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -205,6 +209,17 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "success " + Integer.toString(emlRecs.size()), Toast.LENGTH_LONG);
         toast.show();
         return emlRecs;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, "Event Saved!", Toast.LENGTH_SHORT).show();
+        }
+        mEventAdapter.notifyDataSetChanged();
     }
 
 }

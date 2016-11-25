@@ -33,8 +33,12 @@ public class DisplayEventInfoActivity extends AppCompatActivity {
         String fromTime = getIntent().getStringExtra("fromTime");
         String toTime = getIntent().getStringExtra("toTime");
         String url = getIntent().getStringExtra("url");
-        //modify the URL to display a bigger image
-        url = url.replace("ms.jpg", "ls.jpg");
+        //user could have inputted a custom location, which won't have an image URL from Yelp
+        if (url != null) {
+            //modify the URL to display a bigger image
+            url = url.replace("ms.jpg", "ls.jpg");
+            Picasso.with(getApplicationContext()).load(url).into(image);
+        }
         tvName.setText(name);
         tvLocation.setText(location);
         tvAddress.setText("Address: " + address);
@@ -42,7 +46,7 @@ public class DisplayEventInfoActivity extends AppCompatActivity {
         tvParticipant.setText(participant);
         tvFromTime.setText("From: " + fromTime);
         tvToTime.setText("To: " + toTime);
-        Picasso.with(getApplicationContext()).load(url).into(image);
+
 
     }
 

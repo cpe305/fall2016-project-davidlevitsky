@@ -78,13 +78,21 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             //After user saves an event, confirm it and take them back to main page
             public void onClick(View v) {
+                //sendEmailNotification();
                 if (!createNewEvent()) {
                     return;
                 }
-                Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
-                Toast toast = Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT);
-                toast.show();
-                startActivity(intent);
+                sendEmailNotification();
+                Intent data = new Intent();
+                // Pass relevant data back as a result
+                data.putExtra("code", 1); // ints work too
+                // Activity finished ok, return the data
+                setResult(RESULT_OK, data); // set result code and bundle data for response
+//                Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
+//                Toast toast = Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT);
+//                toast.show();
+//                //startActivity(intent);
+                finish();
             }
 
         });
@@ -128,6 +136,27 @@ public class CreateEventActivity extends AppCompatActivity {
             etAddress.setText(data.getStringExtra("location"));
             imageURL = data.getStringExtra("url");
             rating = data.getStringExtra("rating");
+        }
+    }
+
+    public void sendEmailNotification() {
+        String name = etEventName.getText().toString();
+        String date = etDateString.getText().toString();
+        String location = etLocation.getText().toString();
+        String startTime = fromTime.getText().toString();
+        String endTime = toTime.getText().toString();
+        String bodyOfEmail = "Hey!\nI'd like to invite you to my event: " + name + ". It will run from ";
+        bodyOfEmail += startTime + " until " + endTime + " at the following location: " + location + " on " +
+                date + ". Hope to see you there!";
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Inivtation to " + name);
+        i.putExtra(Intent.EXTRA_TEXT   , bodyOfEmail);
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(CreateEventActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -197,6 +226,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
             }
         });
+
+
         return success;
 
 
