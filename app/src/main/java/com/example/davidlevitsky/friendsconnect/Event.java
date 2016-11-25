@@ -1,5 +1,12 @@
 package com.example.davidlevitsky.friendsconnect;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
+
 import io.realm.RealmObject;
 
 /**
@@ -9,7 +16,7 @@ import io.realm.RealmObject;
  * with an EventModifier class, which will be created if deemed necessary.
  */
 
-public class Event extends RealmObject {
+public class Event extends RealmObject implements Comparable<Event>{
 	private String fromTime;
     private String toTime;
 	private String location;
@@ -18,6 +25,7 @@ public class Event extends RealmObject {
     private String imageUrl;
     private String rating;
     private String address;
+    private Date dateTime;
 
     public Event() {}
 
@@ -28,6 +36,8 @@ public class Event extends RealmObject {
 		this.location = location;
 		this.date = date;
         this.imageUrl = imageUrl;
+        //convert date into Date object so Events can be compared to each other
+
 	}
 
     public void setName(String name) {
@@ -95,6 +105,26 @@ public class Event extends RealmObject {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String date) {
+        DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
+        try {
+            Date dateTime = format.parse(date);
+            this.dateTime = dateTime;
+        }
+        catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public int compareTo(Event event) {
+        return this.dateTime.compareTo(event.getDateTime());
     }
 
 

@@ -22,8 +22,13 @@ import com.yelp.clientlib.entities.Business;
 import com.yelp.clientlib.entities.SearchResponse;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import io.realm.Realm;
@@ -73,6 +78,19 @@ public class CreateEventActivity extends AppCompatActivity {
 
         setup();
         realm.close();
+        //String string = "January 2, 2010";
+//        String string = "10/12/2016";
+//        DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
+//        try {
+//            Date date = format.parse(string);
+//            System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
+//            etLocation.setText(date.toString());
+//
+//        }
+//        catch (ParseException e) {
+//            System.out.println(e.getMessage());
+//        }
+
 
     }
 
@@ -83,21 +101,21 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             //After user saves an event, confirm it and take them back to main page
             public void onClick(View v) {
+                Intent data = new Intent();
                 //sendEmailNotification();
                 if (!createNewEvent()) {
                     return;
                 }
-                sendEmailNotification();
-                Intent data = new Intent();
-                // Pass relevant data back as a result
-                data.putExtra("code", 1); // ints work too
-                // Activity finished ok, return the data
-                setResult(RESULT_OK, data); // set result code and bundle data for response
+                else {
+                    sendEmailNotification();
+                    // Pass relevant data back as a result
+                    data.putExtra("code", 1); // ints work too
+                    // Activity finished ok, return the data
+                    setResult(RESULT_OK, data); // set result code and bundle data for response
 //                Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
-//                Toast toast = Toast.makeText(getApplicationContext(), "Event Saved!", Toast.LENGTH_SHORT);
-//                toast.show();
 //                //startActivity(intent);
-                finish();
+                    finish();
+                }
             }
 
         });
@@ -189,6 +207,7 @@ public class CreateEventActivity extends AppCompatActivity {
         final String location = etLocation.getText().toString();
         final String startTime = fromTime.getText().toString();
         final String endTime = toTime.getText().toString();
+        final String contactName = tvInvitedContact.getText().toString();
         boolean success = true;
 
         // Light error checking
@@ -228,27 +247,35 @@ public class CreateEventActivity extends AppCompatActivity {
 
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Event event = realm.createObject(Event.class);
-                event.setName(name);
-                event.setDate(date);
-                event.setLocation(etLocation.getText().toString());
-                event.setFromTime(fromTime.getText().toString());
-                event.setToTime(toTime.getText().toString());
-                event.setRating(rating);
-                event.setAddress(etAddress.getText().toString());
-                if (imageURL != null) {
-                    event.setImageUrl(imageURL);
+        else if (contactName.isEmpty()) {
+            toast = Toast.makeText(context, "Please select a contact", Toast.LENGTH_SHORT);
+            toast.show();
+            success = false;
+        }
+        else {
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Event event = realm.createObject(Event.class);
+                    event.setName(name);
+                    event.setDate(date);
+                    event.setLocation(etLocation.getText().toString());
+                    event.setFromTime(fromTime.getText().toString());
+                    event.setToTime(toTime.getText().toString());
+                    event.setRating(rating);
+                    event.setAddress(etAddress.getText().toString());
+                    event.setDateTime(date);
+                    if (imageURL != null) {
+                        event.setImageUrl(imageURL);
+                    }
+                    EventsList.getInstance().addEvent(event);
+                    EventsList.getInstance().sortEvents();
+
+
                 }
-                EventsList.getInstance().addEvent(event);
-
-
-            }
-        });
-
+            });
+        }
 
         return success;
 

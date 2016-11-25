@@ -23,9 +23,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private EventAdapter mEventAdapter;
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_CODE = 1;
+   // private ArrayList<Event> totalEventsList = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RealmSetup();
         setup();
+        ContactsList.getInstance().getContactsList().clear();
         //get list of contacts from phone by populating ContactsList singleton
+
         ArrayList<String> contactList = getNameEmailDetails();
+
     }
 
 
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setup() {
         RealmResults<Event> results = realm.where(Event.class).findAll();
-
+        currentDate = DateFormat.getDateTimeInstance().format(new Date());
 //
 
         EventsList eventsList = EventsList.getInstance();
@@ -80,9 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
             for (Event e : results) {
                 eventsList.addEvent(e);
+             //   totalEventsList.add(e);
             }
         }
-        mEventAdapter = new EventAdapter(this, eventsList.getEventsList());
+
+        mEventAdapter = new EventAdapter(this, EventsList.getInstance().getEventsList());
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,12 +121,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
+            //list of upcoming events needs to be modified every time this changes
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
+                // copy over all events from Singleton into the events list linked to adapter
 
-                currentDate = String.valueOf(month + "/" + dayOfMonth + "/" + year);
+                currentDate = String.valueOf((month + 1) + "/" + dayOfMonth + "/" + year);
+                //take care of parsing issues
+                if (month <= 9) {
+                    currentDate = "0" + currentDate;
+                }
+                DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
+                // if the current date is bigger than the current event, remove the event from the adapter
+//                try {
+//                    Date dateTime = format.parse(currentDate);
+//                    for (Event e : EventsList.getInstance().getEventsList()) {
+//                        if (e.getDateTime().compareTo(dateTime) < 0) {
+//                            mEventAdapter.remove(e);
+//                        }
+//                    }
+//
+//                    mEventAdapter.notifyDataSetChanged();
+//                }
+//                catch (ParseException e) {
+//                    System.out.println(e.getMessage());
+//                }
             }
         });
         //refresh the adapter at the end of setting up.
@@ -165,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        EventsList.getInstance().sortEvents();
+        mEventAdapter.notifyDataSetChanged();
 
     }
 
@@ -199,7 +233,9 @@ public class MainActivity extends AppCompatActivity {
                 if (emlRecsHS.add(emlAddr.toLowerCase())) {
                     emlRecs.add(emlAddr);
                     Contact contact = new Contact(name, emlAddr);
-                    ContactsList.getInstance().addContact(contact);
+                    if (!ContactsList.getInstance().getContactsList().contains(contact)) {
+                        ContactsList.getInstance().addContact(contact);
+                    }
 
                 }
             } while (cur.moveToNext());
@@ -218,8 +254,11 @@ public class MainActivity extends AppCompatActivity {
             // Extract name value from result extras
             // Toast the name to display temporarily on screen
             Toast.makeText(this, "Event Saved!", Toast.LENGTH_SHORT).show();
+            mEventAdapter.notifyDataSetChanged();
+
         }
-        mEventAdapter.notifyDataSetChanged();
+
     }
+
 
 }
