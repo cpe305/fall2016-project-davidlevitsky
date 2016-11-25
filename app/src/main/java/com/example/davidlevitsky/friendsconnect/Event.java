@@ -26,6 +26,7 @@ public class Event extends RealmObject implements Comparable<Event>{
     private String rating;
     private String address;
     private Date dateTime;
+    private String userRating;
 
     public Event() {}
 
@@ -112,7 +113,7 @@ public class Event extends RealmObject implements Comparable<Event>{
     }
 
     public void setDateTime(String date) {
-        DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         try {
             Date dateTime = format.parse(date);
             this.dateTime = dateTime;
@@ -120,6 +121,14 @@ public class Event extends RealmObject implements Comparable<Event>{
         catch (ParseException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public String getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(String userRating) {
+        this.userRating = userRating;
     }
 
     @Override

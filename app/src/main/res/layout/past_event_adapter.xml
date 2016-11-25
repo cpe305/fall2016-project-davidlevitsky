@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/tvPastAdapterNameOfPerson"
+        android:layout_alignParentTop="true"
+
+        />
+
+    <TextView
+        android:text="Event Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPastAdapterEventName"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/black"
+        android:textStyle="normal|bold"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPastAdapterNameOfPerson"
+        android:layout_alignParentStart="true"
+        android:id="@+id/tvPastAdapterDate"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif" />
+
+    <TextView
+        android:text="StartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPastLocation"
+        android:layout_toEndOf="@+id/tvPastAdapterNameOfPerson"
+        android:id="@+id/tvPastFromTime"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="EndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPastToTime"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/tvPastFromTime"
+        android:layout_toEndOf="@+id/tvPastAdapterNameOfPerson" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivPastAdapterEventImage"
+        android:adjustViewBounds="true"
+        android:maxHeight="100dp"
+        android:layout_below="@+id/tvPastToTime"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPastLocation"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/tvPastAdapterDate"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/star_off"
+        android:id="@+id/ibRateEvent"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:layout_alignBottom="@+id/tvPastFromTime"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/background_light" />
+
+</RelativeLayout>

@@ -78,19 +78,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
         setup();
         realm.close();
-        //String string = "January 2, 2010";
-//        String string = "10/12/2016";
-//        DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
-//        try {
-//            Date date = format.parse(string);
-//            System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
-//            etLocation.setText(date.toString());
-//
-//        }
-//        catch (ParseException e) {
-//            System.out.println(e.getMessage());
-//        }
-
 
     }
 

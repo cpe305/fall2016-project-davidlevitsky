@@ -71,7 +71,8 @@
             android:id="@+id/imageButton4"
             android:src="@android:drawable/btn_star_big_on"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/imageButton3" />
+            android:layout_toStartOf="@+id/imageButton3"
+            android:onClick="onClickViewAllEvents" />
 
     </RelativeLayout>
 </LinearLayout>

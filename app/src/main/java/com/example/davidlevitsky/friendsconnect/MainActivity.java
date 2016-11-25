@@ -1,23 +1,13 @@
 package com.example.davidlevitsky.friendsconnect;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.Image;
-import android.os.Build;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -27,7 +17,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,11 +24,8 @@ import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private EventAdapter mEventAdapter;
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_CODE = 1;
-   // private ArrayList<Event> totalEventsList = new ArrayList<Event>();
+    private CalendarView calendarView;
+    private DateFormat dateFormat;
+    private ArrayList<Event> todayEventsList = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +68,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //this will work on todayEventsList
+    public void refreshDailyScheduledEvents(String todayDate) {
+        todayEventsList.clear();
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        // fill todayEventsList with events on selectedDate or in the future
+        try {
+            Date dateTime = format.parse(todayDate);
+
+            for (Event e : EventsList.getInstance().getEventsList()) {
+                if (e.getDateTime().compareTo(dateTime) >= 0) {
+                    todayEventsList.add(e);
+                }
+            }
+        }
+        catch (ParseException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), "excepetion", Toast.LENGTH_LONG);
+            toast.show();
+            System.out.println(e.getStackTrace());
+        }
+//        Toast toast = Toast.makeText(getApplicationContext(), "size of today events: " + Integer.toString(todayEventsList.size()), Toast.LENGTH_LONG);
+//        toast.show();
+//        Toast toast2 = Toast.makeText(getApplicationContext(), "size of all events: " + Integer.toString(EventsList.getInstance().getEventsList().size()), Toast.LENGTH_LONG);
+//        toast2.show();
+        Collections.sort(todayEventsList);
+        mEventAdapter.notifyDataSetChanged();
+
+    }
+
     public void setup() {
         RealmResults<Event> results = realm.where(Event.class).findAll();
-        currentDate = DateFormat.getDateTimeInstance().format(new Date());
-//
 
+        //get the current date and format it appropriately
+        calendarView = (CalendarView)findViewById(R.id.mCalendarView);
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        currentDate = dateFormat.format(new Date(calendarView.getDate()));
+
+        //populate Singleton list of events contained in Database
         EventsList eventsList = EventsList.getInstance();
         if (eventsList.getNumEvents() == 0) {
 
@@ -94,20 +114,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        mEventAdapter = new EventAdapter(this, EventsList.getInstance().getEventsList());
+       // mEventAdapter = new EventAdapter(this, EventsList.getInstance().getEventsList());
+
+        mEventAdapter = new EventAdapter(this, todayEventsList);
+        refreshDailyScheduledEvents(currentDate);
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //do nothing
-            }
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //do nothing
+//            }
+//
+//
+//        });
 
-
-        });
-
-
-        CalendarView calendarView = (CalendarView)findViewById(R.id.mCalendarView);
 
         ImageButton btnCreateEvent = (ImageButton)findViewById(R.id.imageButton2);
         btnCreateEvent.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 if (month <= 9) {
                     currentDate = "0" + currentDate;
                 }
-                DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
+                refreshDailyScheduledEvents(currentDate);
+               // DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
                 // if the current date is bigger than the current event, remove the event from the adapter
 //                try {
 //                    Date dateTime = format.parse(currentDate);
@@ -157,10 +179,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        refreshDailyScheduledEvents(currentDate);
+    }
+
+    public void onClickViewAllEvents(View view) {
+        Intent i = new Intent(MainActivity.this, DisplayPastEventsActivity.class);
+        i.putExtra("date", dateFormat.format(new Date(calendarView.getDate())));
+        startActivity(i);
+    }
+
 
     public void onClickViewDetails(View view) {
         int position = (Integer)view.getTag();
-        Event event = EventsList.getInstance().getEventsList().get(position);
+        Event event = todayEventsList.get(position);
         Intent i = new Intent(MainActivity.this, DisplayEventInfoActivity.class);
         // put "extras" into the bundle for access in the second activity
         i.putExtra("name", event.getName());
@@ -182,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         int position = (Integer)view.getTag();
         Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT);
         toast.show();
-        Event event = EventsList.getInstance().getEventsList().get(position);
+        Event event = todayEventsList.get(position);
         final String eventName = event.getName();
         mEventAdapter.remove(event);
         mEventAdapter.notifyDataSetChanged();
@@ -198,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         EventsList.getInstance().sortEvents();
+        refreshDailyScheduledEvents(currentDate);
         mEventAdapter.notifyDataSetChanged();
 
     }
@@ -242,8 +278,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cur.close();
-        Toast toast = Toast.makeText(getApplicationContext(), "success " + Integer.toString(emlRecs.size()), Toast.LENGTH_LONG);
-        toast.show();
+        //Toast toast = Toast.makeText(getApplicationContext(), "success " + Integer.toString(emlRecs.size()), Toast.LENGTH_LONG);
+        //toast.show();
         return emlRecs;
     }
 
@@ -254,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
             // Extract name value from result extras
             // Toast the name to display temporarily on screen
             Toast.makeText(this, "Event Saved!", Toast.LENGTH_SHORT).show();
+            refreshDailyScheduledEvents(currentDate);
             mEventAdapter.notifyDataSetChanged();
 
         }

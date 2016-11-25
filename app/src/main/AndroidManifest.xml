@@ -20,15 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateEventActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".CreateEventActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SearchEventYelpActivity"
             android:label="@string/title_activity_search_event_yelp"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".YelpResultInfoActivity" />
-        <activity android:name=".DisplayEventInfoActivity"></activity>
+        <activity android:name=".DisplayEventInfoActivity" />
+        <activity android:name=".DisplayPastEventsActivity"></activity>
     </application>
 
 </manifest>
