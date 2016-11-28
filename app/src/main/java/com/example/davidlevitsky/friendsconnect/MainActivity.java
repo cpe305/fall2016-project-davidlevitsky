@@ -87,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             System.out.println(e.getStackTrace());
         }
-//        Toast toast = Toast.makeText(getApplicationContext(), "size of today events: " + Integer.toString(todayEventsList.size()), Toast.LENGTH_LONG);
-//        toast.show();
-//        Toast toast2 = Toast.makeText(getApplicationContext(), "size of all events: " + Integer.toString(EventsList.getInstance().getEventsList().size()), Toast.LENGTH_LONG);
-//        toast2.show();
+
         Collections.sort(todayEventsList);
         mEventAdapter.notifyDataSetChanged();
 
@@ -120,14 +117,6 @@ public class MainActivity extends AppCompatActivity {
         refreshDailyScheduledEvents(currentDate);
         ListView listView = (ListView) findViewById(R.id.lvEvents);
         listView.setAdapter(mEventAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //do nothing
-//            }
-//
-//
-//        });
 
 
         ImageButton btnCreateEvent = (ImageButton)findViewById(R.id.imageButton2);
@@ -154,21 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     currentDate = "0" + currentDate;
                 }
                 refreshDailyScheduledEvents(currentDate);
-               // DateFormat format = new SimpleDateFormat("mm/dd/yyyy", Locale.ENGLISH);
-                // if the current date is bigger than the current event, remove the event from the adapter
-//                try {
-//                    Date dateTime = format.parse(currentDate);
-//                    for (Event e : EventsList.getInstance().getEventsList()) {
-//                        if (e.getDateTime().compareTo(dateTime) < 0) {
-//                            mEventAdapter.remove(e);
-//                        }
-//                    }
-//
-//                    mEventAdapter.notifyDataSetChanged();
-//                }
-//                catch (ParseException e) {
-//                    System.out.println(e.getMessage());
-//                }
+
             }
         });
         //refresh the adapter at the end of setting up.

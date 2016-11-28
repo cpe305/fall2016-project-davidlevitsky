@@ -35,6 +35,18 @@ public class EventsListTest {
         assertEquals(0, eventsList.getNumEvents());
     }
 
+//    @Test
+//    public void testGetInstance() {
+//        assertEquals(eventsList, eventsList.getInstance());
+//    }
+
+    @Test
+    public void testGetNumEvents() {
+        assertEquals(2, eventsList.getNumEvents());
+    }
+
+
+
 
     public static void main(String [] args) {
         org.junit.runner.JUnitCore.main("ExampleUnitTest");

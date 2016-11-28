@@ -5,6 +5,12 @@ import android.app.usage.UsageEvents;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,6 +53,33 @@ public class EventTester {
     public void testSetLocation() {
         event.setLocation("location1");
         assertEquals("location1", event.getLocation());
+    }
+
+    @Test
+    public void testSetImageURL() {
+        event.setImageUrl("imageURL");
+        assertEquals("imageURL", event.getImageUrl());
+    }
+
+    @Test
+    public void testSetAddress() {
+        event.setAddress("address");
+        assertEquals("address", event.getAddress());
+    }
+
+    @Test
+    public void testSetDateTime() {
+        event.setDateTime("10/25/1996");
+        String date = "10/25/1996";
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        try {
+            Date dateTime = format.parse(date);
+            assertEquals(dateTime, event.getDateTime());
+        }
+        catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 

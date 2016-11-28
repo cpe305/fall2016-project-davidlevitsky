@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * for performance. All classes should be able to access this
  * information.
  */
-public class ContactsList  {
+public class  ContactsList  {
     private ArrayList<Contact> contactsList;
     private int numContacts = 0;
     private static ContactsList instance = new ContactsList();
@@ -33,11 +33,16 @@ public class ContactsList  {
         numContacts++;
     }
 
-    public void deleteContact(Event event) {
-        if (contactsList.contains(event)) {
-            contactsList.remove(event);
+    public void deleteContact(Contact contact) {
+        if (contactsList.contains(contact)) {
+            contactsList.remove(contact);
             numContacts--;
         }
+    }
+
+    public void deleteAllContacts() {
+        contactsList.clear();
+        numContacts = 0;
     }
 
     public int getNumContacts() {
