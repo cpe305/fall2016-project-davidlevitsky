@@ -3,6 +3,8 @@ package com.example.davidlevitsky.friendsconnect;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -25,6 +27,8 @@ public class EventsListTest {
     public void testAddingEvents() {
         eventsList.addEvent(event1);
         eventsList.addEvent(event2);
+        ArrayList<Event> hiddenList = EventsList.getInstance().getEventsList();
+        assertEquals(2, hiddenList.size());
         assertEquals(2, eventsList.getNumEvents());
     }
 

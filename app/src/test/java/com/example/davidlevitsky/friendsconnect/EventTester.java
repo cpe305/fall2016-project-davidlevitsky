@@ -82,6 +82,11 @@ public class EventTester {
 
     }
 
+    @Test
+    public void testSetUserRating() {
+        event.setUserRating("user rating");
+        assertEquals("user rating", event.getUserRating());
+    }
 
     public static void main(String [] args) {
         org.junit.runner.JUnitCore.main("ExampleUnitTest");
