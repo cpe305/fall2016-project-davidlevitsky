@@ -8,17 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-
 import io.realm.Realm;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.RealmObject;
 
 /**
  * Created by davidlevitsky on 11/25/16.
@@ -70,10 +62,10 @@ public class PastEventAdapter extends ArrayAdapter<Event> {
         //ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
         final ImageButton ibApprove = (ImageButton)convertView.findViewById(R.id.ibRateEvent);
         String userRating = event.getUserRating();
-        if (userRating != null && userRating.equals("good")) {
+        if (userRating != null && "good".equals(userRating)) {
             ibApprove.setImageResource(R.drawable.thumbs_up);
         }
-        else if (userRating != null && userRating.equals("bad")){
+        else if (userRating != null && "bad".equals(userRating)){
             ibApprove.setImageResource(R.drawable.thumbs_down);
         }
 
@@ -81,18 +73,15 @@ public class PastEventAdapter extends ArrayAdapter<Event> {
 
             @Override
             public void onClick(View v) {
-                if (event.getUserRating() == null) {
+                if (event.getUserRating() == null || "bad".equals(event.getUserRating())) {
                     setEventUserRating(event, "good");
                     ibApprove.setImageResource(R.drawable.thumbs_up);
                 }
-                else if (event.getUserRating().equals("good")) {
+                else if ("good".equals(event.getUserRating())) {
                     setEventUserRating(event, "bad");
                     ibApprove.setImageResource(R.drawable.thumbs_down);
                 }
-                else {
-                    setEventUserRating(event, "good");
-                    ibApprove.setImageResource(R.drawable.thumbs_up);
-                }
+
             }
         });
 
@@ -111,7 +100,7 @@ public class PastEventAdapter extends ArrayAdapter<Event> {
 
             }
         });
-      //  realm.close();
+        realm.close();
         this.notifyDataSetChanged();
     }
 }

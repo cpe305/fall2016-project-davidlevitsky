@@ -1,26 +1,20 @@
 package com.example.davidlevitsky.friendsconnect;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
 import com.yelp.clientlib.entities.SearchResponse;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +28,11 @@ public class SearchEventYelpActivity extends AppCompatActivity {
     private final String TOKEN_SECRET = "xcRAN6Xn69pQKHy008HJyYaeTGM";
     public final int REQUEST_CODE = 200;
     private Button bSearch;
-    private Button bSaveYelpEvent;
     private EditText etYelpSearchTerm;
     private EditText etYelpLocation;
     ArrayList<YelpResult> yelpResultsList;
     ListView lvYelpResults;
     YelpResultAdapter mYelpResultsAdapter;
-    public static int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +98,7 @@ public class SearchEventYelpActivity extends AppCompatActivity {
 
         try {
             SearchResponse searchResponse = call.execute().body();
-            int totalNumberOfResult = searchResponse.total();  // 3
             ArrayList<Business> businesses = searchResponse.businesses();
-            String businessName = businesses.get(0).name();  // "JapaCurry Truck"
           //  String rating = Double.toString(businesses.get(0).rating());  // 4.0
           //  String address
           //  Toast toast2 = Toast.makeText(getApplicationContext(), "name: " + businessName + "rating: " + Double.toString(rating), Toast.LENGTH_LONG);

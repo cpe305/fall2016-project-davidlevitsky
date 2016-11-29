@@ -20,6 +20,8 @@ public class EventsListTest {
     public void makeEvent() {
         event1 = new Event("fromTime", "toTime", "location", "date", "name", "");
         event2 = new Event("1", "2", "3", "4", "5", "");
+        event1.setDateTime("12/25/1996");
+        event2.setDateTime("11/25/1996");
         eventsList = EventsList.getInstance();
     }
 
@@ -30,19 +32,20 @@ public class EventsListTest {
         ArrayList<Event> hiddenList = EventsList.getInstance().getEventsList();
         assertEquals(2, hiddenList.size());
         assertEquals(2, eventsList.getNumEvents());
+        eventsList.sortEvents();
+        assertEquals(event2, eventsList.getEventsList().get(0));
     }
 
     @Test
     public void testDeletingEvents() {
         eventsList.deleteEvent(event1);
         eventsList.deleteEvent(event2);
+        assertEquals(false, eventsList.getEventsList().contains(event1));
+        assertEquals(false, eventsList.getEventsList().contains(event2));
         assertEquals(0, eventsList.getNumEvents());
     }
 
-//    @Test
-//    public void testGetInstance() {
-//        assertEquals(eventsList, eventsList.getInstance());
-//    }
+
 
     @Test
     public void testGetNumEvents() {
@@ -52,8 +55,11 @@ public class EventsListTest {
 
 
 
+
+
+
     public static void main(String [] args) {
-        org.junit.runner.JUnitCore.main("ExampleUnitTest");
+        org.junit.runner.JUnitCore.main("EventsListTest");
     }
 
 }

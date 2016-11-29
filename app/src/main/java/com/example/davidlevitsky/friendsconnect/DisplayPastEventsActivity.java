@@ -2,9 +2,8 @@ package com.example.davidlevitsky.friendsconnect;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +42,8 @@ public class DisplayPastEventsActivity extends AppCompatActivity {
             }
         }
         catch (ParseException e) {
-            System.out.println(e.getStackTrace());
+            Log.e("FriendsConnect", "exception: " + e.getMessage());
+
         }
 
 

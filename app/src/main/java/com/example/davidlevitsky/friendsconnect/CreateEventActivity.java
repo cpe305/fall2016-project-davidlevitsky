@@ -2,39 +2,19 @@ package com.example.davidlevitsky.friendsconnect;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.yelp.clientlib.connection.YelpAPI;
-import com.yelp.clientlib.connection.YelpAPIFactory;
-import com.yelp.clientlib.entities.Business;
-import com.yelp.clientlib.entities.SearchResponse;
-
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import io.realm.Realm;
-import io.realm.RealmResults;
-import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by davidlevitsky on 10/24/16.
@@ -184,6 +164,8 @@ public class CreateEventActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(CreateEventActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Log.e("FriendsConnect", "exception: " + ex.getMessage());
+
         }
     }
 
@@ -258,7 +240,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     }
                     EventsList.getInstance().addEvent(event);
                     EventsList.getInstance().sortEvents();
-
+                    realm.close();
 
                 }
             });

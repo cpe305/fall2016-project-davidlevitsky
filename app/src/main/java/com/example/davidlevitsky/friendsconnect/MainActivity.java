@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
@@ -83,9 +84,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         catch (ParseException e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "excepetion", Toast.LENGTH_LONG);
-            toast.show();
-            System.out.println(e.getStackTrace());
+            Log.e("FriendsConnect", "exception: " + e.getMessage());
+
         }
 
         Collections.sort(todayEventsList);

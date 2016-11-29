@@ -1,11 +1,7 @@
 package com.example.davidlevitsky.friendsconnect;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +14,6 @@ public class YelpResultInfoActivity extends AppCompatActivity {
     ImageView ivInfoPicture;
     TextView tvRating;
     TextView tvNumReviews;
-    TextView tvDescription;
 
 
     @Override
@@ -41,8 +36,7 @@ public class YelpResultInfoActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
         String rating = getIntent().getStringExtra("rating");
         String numReviews = getIntent().getStringExtra("numReviews");
-        String description = getIntent().getStringExtra("description");
-        String mobileURL = getIntent().getStringExtra("mobileURL");
+
 
         tvName.setText(name);
         tvAddress.setText("Address: " + address);

@@ -1,9 +1,10 @@
 package com.example.davidlevitsky.friendsconnect;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -28,7 +29,9 @@ public class Event extends RealmObject implements Comparable<Event>{
     private Date dateTime;
     private String userRating;
 
-    public Event() {}
+    public Event() {
+        //realm wants an empty default constructor based on its API documentation
+    }
 
 	public Event(String name, String fromTime, String toTime, String location, String date, String imageUrl) {
         this.name = name;
@@ -119,7 +122,7 @@ public class Event extends RealmObject implements Comparable<Event>{
             this.dateTime = dateTime;
         }
         catch (ParseException e) {
-            System.out.println(e.getMessage());
+            Log.e("FriendsConnect", "exception: " + e.getMessage());
         }
     }
 
