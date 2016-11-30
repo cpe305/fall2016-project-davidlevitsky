@@ -1,4 +1,4 @@
-# fall2016-project-davidlevitsky
+# FriendsConnect
 
 <b> FriendsConnect </b>
 
@@ -17,6 +17,10 @@ Eventually, the application will be available on the Google Play Store.
 <b> Walkthrough and Description of Features </b>
 
 Please visit the Github Pages website which contains a detailed walkthrough of using the application, a description of core functionalities, and relavant technical details. It can be found here: https://cpe305.github.io/fall2016-project-davidlevitsky/
+
+<b> Screencap Demonstration </b>
+
+Will feature shortly.
 
 Please contact dlevitsk@calpoly.edu for any questions, comments, or general feedback.
 
