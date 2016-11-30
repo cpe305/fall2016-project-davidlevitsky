@@ -42,10 +42,13 @@ public class DisplayEventInfoActivity extends AppCompatActivity {
         tvName.setText(name);
         tvLocation.setText(location);
         tvAddress.setText("Address: " + address);
-        tvRating.setText("Rating (out of 5): " + rating);
-        tvParticipant.setText(participant);
+        tvParticipant.setText("Invitee: " + participant);
         tvFromTime.setText("From: " + fromTime);
         tvToTime.setText("To: " + toTime);
+        if (rating != null) {
+            tvRating.setText("Rating (out of 5): " + rating);
+        }
+
 
 
     }

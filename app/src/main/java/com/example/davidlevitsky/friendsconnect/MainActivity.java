@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("fromTime", event.getFromTime());
         i.putExtra("toTime", event.getToTime());
         i.putExtra("url", event.getImageUrl());
-        i.putExtra("participant", "John Doe");
+        i.putExtra("participant", event.getParticipantName());
         // brings up the second activity
         startActivity(i);
     }

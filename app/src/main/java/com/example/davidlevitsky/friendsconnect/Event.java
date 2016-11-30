@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import io.realm.RealmObject;
 
 /**
@@ -28,6 +27,7 @@ public class Event extends RealmObject implements Comparable<Event>{
     private String address;
     private Date dateTime;
     private String userRating;
+    private String participantName;
 
     public Event() {
         //realm wants an empty default constructor based on its API documentation
@@ -128,6 +128,14 @@ public class Event extends RealmObject implements Comparable<Event>{
 
     public String getUserRating() {
         return userRating;
+    }
+
+    public String getParticipantName() {
+        return participantName;
+    }
+
+    public void setParticipantName(String participantName) {
+        this.participantName = participantName;
     }
 
     public void setUserRating(String userRating) {

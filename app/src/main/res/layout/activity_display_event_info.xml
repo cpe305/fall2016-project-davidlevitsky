@@ -74,16 +74,15 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="13dp"
         android:id="@+id/ivDisplayInfoImage"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvDisplayInfoRating"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
-        android:text="Rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDisplayInfoAddress"

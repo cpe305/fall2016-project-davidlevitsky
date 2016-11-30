@@ -228,6 +228,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     event.setRating(rating);
                     event.setAddress(etAddress.getText().toString());
                     event.setDateTime(date);
+                    event.setParticipantName(tvInvitedContact.getText().toString());
                     if (imageURL != null) {
                         event.setImageUrl(imageURL);
                     }
