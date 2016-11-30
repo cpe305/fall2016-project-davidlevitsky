@@ -38,12 +38,8 @@
 <li>Dynamic Upcoming Schedule Viewer</li>
 <li>History of Past Events</li>
 <li>Feedback Mechanism for Previous Events</li>
+<li>Persistence of Data through Realm Database</li>
 </ul>
-
-<h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
 
 <h3>
 <a id="basic-walkthrough" class="anchor" href="#basic-walkthrough" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Walkthrough</h3>
@@ -104,9 +100,23 @@
 
 <p><b> Design Architecture <b></b></b></p>
 
-<p>Here you can see the design structure of the project, complete with class diagrams, activities, and XML files. The MVP structure was slightly modified to add a persistence layer, which is a Realm database used to store created events.</p>
+<p>Here you can see the design structure of the project, complete with class diagrams, activities, and XML files. The MVP structure was slightly modified to add a persistence layer, which is a Realm database used to store created events. </p>
+
+<p>The Model layer describes the core data structures and logic. The EventsList is the main container of information, since it holds all past and future Events that a user has scheduled. ContactsList is a Singleton representation of the user's contacts pulled from their phone after permission is granted. YelpResults are used to store information created by the YelpAPI.</p>
+
+<p>The Presenter layer outlines the different screens that the user will see, specifically the various Activities. Each Activity serves its own purpose. By using Intents, the Activities are able to communicate with each other and create data flow.</p>
+
+<p>The View layer lists the XML files used for visual representation of the aforementioned Activities.</p>
 
 <p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/MVPOverview.png?raw=true" alt=""></p>
+
+<h3>
+<a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h3>
+
+<p>The Singleton pattern was used twice in this project - one to create an instance of EventsList, which is a tangible Java representation of information stored in a Realm database, while the other is an instance of ContactsList, which is responsible for storing a user's contacts.</p>
+
+<h3>
+<a id="developers-notes-lessons-learned-for-the-future" class="anchor" href="#developers-notes-lessons-learned-for-the-future" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developer's Notes: Lessons Learned for the Future</h3>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/cpe305/fall2016-project-davidlevitsky">Fall2016-project-davidlevitsky</a> is maintained by <a href="https://github.com/cpe305">cpe305</a>.</span>
