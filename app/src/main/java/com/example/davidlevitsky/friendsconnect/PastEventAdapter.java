@@ -28,7 +28,8 @@ public class PastEventAdapter extends ArrayAdapter<Event> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View inConvertView, ViewGroup parent) {
+        View convertView = inConvertView;
         // Get the data item for this position
         final Event event = getItem(position);
         if (event == null) {
@@ -59,7 +60,6 @@ public class PastEventAdapter extends ArrayAdapter<Event> {
         }
         // Return the completed view to render on screen
 
-        //ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
         final ImageButton ibApprove = (ImageButton)convertView.findViewById(R.id.ibRateEvent);
         String userRating = event.getUserRating();
         if (userRating != null && "good".equals(userRating)) {

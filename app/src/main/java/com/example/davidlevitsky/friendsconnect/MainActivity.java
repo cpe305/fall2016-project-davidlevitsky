@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setup();
         ContactsList.getInstance().getContactsList().clear();
         //get list of contacts from phone by populating ContactsList singleton
-
-        ArrayList<String> contactList = getNameEmailDetails();
-
+        getNameEmailDetails();
     }
 
 
@@ -65,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(realmConfiguration);
 
         realm = Realm.getDefaultInstance();
-       // Toast.makeText(getBaseContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
-
     }
 
     //this will work on todayEventsList
@@ -107,11 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
             for (Event e : results) {
                 eventsList.addEvent(e);
-             //   totalEventsList.add(e);
             }
         }
-
-       // mEventAdapter = new EventAdapter(this, EventsList.getInstance().getEventsList());
 
         mEventAdapter = new EventAdapter(this, todayEventsList);
         refreshDailyScheduledEvents(currentDate);
@@ -190,8 +183,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         int position = (Integer)view.getTag();
-        Toast toast = Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT);
-        toast.show();
         Event event = todayEventsList.get(position);
         final String eventName = event.getName();
         mEventAdapter.remove(event);
@@ -253,8 +244,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cur.close();
-        //Toast toast = Toast.makeText(getApplicationContext(), "success " + Integer.toString(emlRecs.size()), Toast.LENGTH_LONG);
-        //toast.show();
         return emlRecs;
     }
 

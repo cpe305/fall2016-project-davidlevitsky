@@ -41,7 +41,8 @@ public class YelpResultAdapter extends ArrayAdapter<YelpResult> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View inConvertView, ViewGroup parent) {
+        View convertView = inConvertView;
         RealmSetup();
         YelpResult result = getItem(position);
         if (result == null) {
@@ -51,9 +52,6 @@ public class YelpResultAdapter extends ArrayAdapter<YelpResult> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.yelp_result_adapter, parent, false);
         }
-       // final ImageButton ibDeleteEvent = (ImageButton) convertView.findViewById(R.id.ibDeleteEvent);
-       // ibDeleteEvent.setTag(position);
-
 
         // Lookup view for data population
         tvYelpResultName = (TextView)convertView.findViewById(R.id.tvYelpResultName);

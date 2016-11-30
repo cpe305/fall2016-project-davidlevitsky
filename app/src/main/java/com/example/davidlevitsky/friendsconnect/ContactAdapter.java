@@ -19,7 +19,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View inConvertView, ViewGroup parent) {
+        View convertView = inConvertView;
         // Get the data item for this position
         Contact contact = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view

@@ -31,7 +31,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View inConvertView, ViewGroup parent) {
+        View convertView = inConvertView;
         RealmSetup();
 
         // Get the data item for this position
@@ -67,11 +68,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         Picasso.with(getContext()).load(event.getImageUrl()).into(iv);
         // Return the completed view to render on screen
 
-        //ImageButton btnDeleteEvent = (ImageButton)convertView.findViewById(R.id.ibDeleteEvent);
-
-        //not working
-
-
         return convertView;
     }
 
@@ -81,8 +77,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         Realm.setDefaultConfiguration(realmConfiguration);
 
         realm = Realm.getDefaultInstance();
-     //   Toast.makeText(getContext(), "\nNumber of events: " + realm.where(Event.class).count(), Toast.LENGTH_SHORT).show();
-
     }
 
 }

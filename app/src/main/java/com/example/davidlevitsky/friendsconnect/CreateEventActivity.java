@@ -79,8 +79,6 @@ public class CreateEventActivity extends AppCompatActivity {
                     data.putExtra("code", 1); // ints work too
                     // Activity finished ok, return the data
                     setResult(RESULT_OK, data); // set result code and bundle data for response
-//                Intent intent = new Intent(CreateEventActivity.this, MainActivity.class);
-//                //startActivity(intent);
                     finish();
                 }
             }
@@ -130,10 +128,6 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            // Extract name value from result extras
-           // String name = data.getExtras().getString("name");
-            //int code = data.getExtras().getInt("position", 0);
-            // Toast the name to display temporarily on screen
             etLocation.setText(data.getStringExtra("name"));
             etAddress.setText(data.getStringExtra("location"));
             imageURL = data.getStringExtra("url");
@@ -150,9 +144,9 @@ public class CreateEventActivity extends AppCompatActivity {
         String contactName = selectedContact.getName();
         String contactEMail = selectedContact.geteMail();
 
-        String bodyOfEmail = "Hey " + contactName + "!\nI'd like to invite you to my event: " + name + ". It will run from ";
+        String bodyOfEmail = "Hey " + contactName + "!\n\nI'd like to invite you to my event: " + name + ".\n\nIt will run from ";
         bodyOfEmail += startTime + " until " + endTime + " at the following location: " + location + " on " +
-                date + ". Hope to see you there!";
+                date + ".\n\nHope to see you there!";
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
@@ -163,9 +157,8 @@ public class CreateEventActivity extends AppCompatActivity {
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(CreateEventActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
             Log.e("FriendsConnect", "exception: " + ex.getMessage());
-
+            Toast.makeText(CreateEventActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -240,10 +233,10 @@ public class CreateEventActivity extends AppCompatActivity {
                     }
                     EventsList.getInstance().addEvent(event);
                     EventsList.getInstance().sortEvents();
-                    realm.close();
-
                 }
             });
+            realm.close();
+
         }
 
         return success;

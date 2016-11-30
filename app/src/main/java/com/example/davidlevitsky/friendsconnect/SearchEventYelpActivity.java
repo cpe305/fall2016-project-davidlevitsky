@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -63,16 +64,6 @@ public class SearchEventYelpActivity extends AppCompatActivity {
             }
         });
 
-        lvYelpResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView parent, View v, int position, long id){
-
-                Toast toast = Toast.makeText(getApplicationContext(), "HI", Toast.LENGTH_SHORT);
-                toast.show();
-
-            }
-        });
-
 
     }
 
@@ -99,10 +90,6 @@ public class SearchEventYelpActivity extends AppCompatActivity {
         try {
             SearchResponse searchResponse = call.execute().body();
             ArrayList<Business> businesses = searchResponse.businesses();
-          //  String rating = Double.toString(businesses.get(0).rating());  // 4.0
-          //  String address
-          //  Toast toast2 = Toast.makeText(getApplicationContext(), "name: " + businessName + "rating: " + Double.toString(rating), Toast.LENGTH_LONG);
-          //  toast2.show();
             for (Business b : businesses) {
                 String name = b.name();
                 String rating = Double.toString(b.rating());
@@ -120,8 +107,7 @@ public class SearchEventYelpActivity extends AppCompatActivity {
             mYelpResultsAdapter.notifyDataSetChanged();
         }
         catch (Exception e) {
-
-            e.printStackTrace();
+            Log.e("FriendsConnect", "exception: " + e.getMessage());
         }
     }
 
