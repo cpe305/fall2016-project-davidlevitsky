@@ -1,10 +1,23 @@
 # fall2016-project-davidlevitsky
 
-See Architecture(1).png and ModelViewPresenterOverview.png files for a visualization of the project's architecture. Please read this entire document prior to doing so.
+<b> FriendsConnect <b>
 
-This project allows a user to easily schedule events with contacts on their phone. A few background notes about Android which will help explain the architecture of this project:
+This project allows a user to easily schedule events with contacts on their phone, namely through Yelp and E-Mail integration. The project utilizes a standard design pattern for Android Applications: Model-View-Presenter (MVP). 
 
-1. Android has a concept of Activities. Each Activity essentially represents a screen, and it has two parts associated with it - the UI, which is defined by an XML file, as well as the Java code inside, which is the middle-man between the UI and logic present in other classes.
-2. Activity is built into Android. Each Activity has an onCreate function, which defines the view that is inflated onto the screen. This can be manipulated with XML files.
+<b> Getting the Application <b>
 
-Because an Activity acts as the middleman of communication between the screen (defined by XML files) and Java logic, the most fitting model to use as an architecture is model-view-presenter. The core logic of the application is defined by various Java files, such as Event, Contact, etc, and this composes the model. The Activity is the presenter - it processes user interaction, feeds data into the model, and then displays whatever output is generated. The XML files, which compose what the user will see on the screen, make up the view in this architecture model. They receive their data from the presenter.
+To get a copy of the application, you will need Android Studio Version 2.0 (or higher). This project was developed in 2.1. Clone the repository in a directory, open up Android Studio, and under File, click "Import Existing Project". Browse your directories until you reach the cloned repository, and click on "app" to load it up.
+
+<b> Running the Application <b>
+
+To run the application, first give Android Studio a few minutes to allow Gradle to sync necessary libraries and process dependencies. Then, simply click the green "Play" button near the top of the browser. If you have an Android device plugged in to your computer, you can download it onto your device. Otherwise, Android Studio will walk you through creating an emulator which you can then use to run the application.
+
+Eventually, the application will be available on the Google Play Store.
+
+<b> Walkthrough and Description of Features <b>
+
+Please visit the Github Pages website which contains a detailed walkthrough of using the application, a description of core functionalities, and relavant technical details. It can be found here: https://cpe305.github.io/fall2016-project-davidlevitsky/
+
+Please contact dlevitsk@calpoly.edu for any questions, comments, or general feedback.
+
+
