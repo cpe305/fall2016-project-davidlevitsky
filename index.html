@@ -85,6 +85,19 @@
 
 <p>After attending an event, you can click the star on the home page to be taken to a list of past events. Use the feedback feature of thumbs up / thumbs down so you can remember your experience for the future!</p>
 
+<h3>
+<a id="technical-details" class="anchor" href="#technical-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technical Details</h3>
+
+<p><b> Architecture <b></b></b></p>
+
+<p>Android operates on a Model-View-Presenter architecture. This architecture is highly effective because screens could change at any time, based on a button press or some user input.</p>
+
+<ul>
+<li>View is a layer that displays data and reacts to user actions. On Android, this could be an Activity, a Fragment, an android.view.View or a Dialog.</li>
+<li>Model is a data access layer such as database API or remote server API.</li>
+<li>Presenter is a layer that provides View with data from Model. Presenter also handles background tasks.</li>
+</ul>
+
 <p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/MVPOverview.png?raw=true" alt=""></p>
 
       <footer class="site-footer">
