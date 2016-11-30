@@ -88,7 +88,7 @@
 <h3>
 <a id="technical-details" class="anchor" href="#technical-details" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technical Details</h3>
 
-<p><b> Architecture <b></b></b></p>
+<p><b> High-Level Architecture <b></b></b></p>
 
 <p>Android operates on a Model-View-Presenter architecture. This architecture is highly effective because screens could change at any time, based on a button press or some user input.</p>
 
@@ -97,6 +97,14 @@
 <li>Model is a data access layer such as database API or remote server API.</li>
 <li>Presenter is a layer that provides View with data from Model. Presenter also handles background tasks.</li>
 </ul>
+
+<p>You can see a high-level overview below. Note that the Presenter is the only method of communication between the View and the Model, and that the two should never be able to communicate directly.</p>
+
+<p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/MVPGeneral.png?raw=true" alt=""></p>
+
+<p><b> Design Architecture <b></b></b></p>
+
+<p>Here you can see the design structure of the project, complete with class diagrams, activities, and XML files. The MVP structure was slightly modified to add a persistence layer, which is a Realm database used to store created events.</p>
 
 <p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/MVPOverview.png?raw=true" alt=""></p>
 
