@@ -129,14 +129,18 @@
 <h3>
 <a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h3>
 
-<p>The Singleton pattern was used twice in this project - one to create an instance of EventsList, which is a tangible Java representation of information stored in a Realm database, while the other is an instance of ContactsList, which is responsible for storing a user's contacts. The benefits of using a Singleton pattern was to improve the organization and performance of the application. Re-loading the user's contacts consistently would become an expensive operation, so doing it once and storing the result in a Singleton class prevents redundancy. For the EventsList class, allowing multiple instances of a database representation could cause serious bugs if different threads were operating on the database simultaneously.</p>
+<p>The Singleton pattern was used twice in this project - one to create an instance of EventsList, which is a tangible Java representation of information stored in a Realm database, while the other is an instance of ContactsList, which is responsible for storing a user's contacts. The benefits of using a Singleton pattern were to improve the organization and performance of the application. Re-loading the user's contacts consistently would become an expensive operation, so doing it once and storing the result in a Singleton class prevents redundancy. For the EventsList class, allowing multiple instances of a database representation could cause serious bugs if different threads were operating on the database simultaneously.</p>
 
 <h3>
 <a id="developers-notes-lessons-learned-for-the-future" class="anchor" href="#developers-notes-lessons-learned-for-the-future" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developer's Notes: Lessons Learned for the Future</h3>
 
 <p><b> Architecture <b></b></b></p>
 
-<p>Although the initial architecture diagrams developed prior to writing the application were decently structured, I ended up needing a lot more classes than I originally planned. While writing the code, I focused too much on implementation and did not revisit the architectural design as much as I should have. Therefore, although the MVP structure still works fine, the class diagram in the model section could have been much cleaner and more modular. I would propose this kind of structure for the model if I were to rewrite my application:</p>
+<p>Although the initial architecture diagrams developed prior to writing the application were decently structured, I ended up needing a lot more classes than I originally planned. While writing the code, I focused too much on implementation and did not revisit the architectural design as much as I should have. Therefore, although the MVP structure still works fine, the class diagram in the model section could have been much cleaner and more modular. For instance, Event and YelpResult are both highly similar classes and create redundancy.</p>
+
+<p>Furthermore, my Activities contained some of the logic that the Java classes located in the Model section of the MVP architecture should have been responsible for. Therefore, I would re-factor several methods and create additional helper classes to execute logic.</p>
+
+<p>I would propose this kind of structure for the model if I were to rewrite my application:</p>
 
 <p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/FutureClassDiagram.png?raw=true" alt=""></p>
 
