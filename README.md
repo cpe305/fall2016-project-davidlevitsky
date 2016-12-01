@@ -20,7 +20,7 @@ Please visit the Github Pages website which contains a detailed walkthrough of u
 
 <b> Screencap Demonstration </b>
 
-Will feature shortly.
+![alt tag](https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/FriendsconnectDemo.gif)
 
 Please contact dlevitsk@calpoly.edu for any questions, comments, or general feedback.
 
