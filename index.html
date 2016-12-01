@@ -129,12 +129,28 @@
 <h3>
 <a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h3>
 
-<p>The Singleton pattern was used twice in this project - one to create an instance of EventsList, which is a tangible Java representation of information stored in a Realm database, while the other is an instance of ContactsList, which is responsible for storing a user's contacts.</p>
+<p>The Singleton pattern was used twice in this project - one to create an instance of EventsList, which is a tangible Java representation of information stored in a Realm database, while the other is an instance of ContactsList, which is responsible for storing a user's contacts. The benefits of using a Singleton pattern was to improve the organization and performance of the application. Re-loading the user's contacts consistently would become an expensive operation, so doing it once and storing the result in a Singleton class prevents redundancy. For the EventsList class, allowing multiple instances of a database representation could cause serious bugs if different threads were operating on the database simultaneously.</p>
 
 <h3>
 <a id="developers-notes-lessons-learned-for-the-future" class="anchor" href="#developers-notes-lessons-learned-for-the-future" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developer's Notes: Lessons Learned for the Future</h3>
 
-<p>Add an "ideal" class diagram, talk about better design patterns</p>
+<p><b> Architecture <b></b></b></p>
+
+<p>Although the initial architecture diagrams developed prior to writing the application were decently structured, I ended up needing a lot more classes than I originally planned. While writing the code, I focused too much on implementation and did not revisit the architectural design as much as I should have. Therefore, although the MVP structure still works fine, the class diagram in the model section could have been much cleaner and more modular. I would propose this kind of structure for the model if I were to rewrite my application:</p>
+
+<p><img src="https://github.com/cpe305/fall2016-project-davidlevitsky/blob/master/FutureClassDiagram.png?raw=true" alt=""></p>
+
+<p><b> Design Patterns <b></b></b></p>
+
+<p>Using the Singleton design pattern helped greatly to organize pieces of data that remained fairly constant. However, my communication between the Realm Database and the EventsList Singleton could have been improved by using an Observer pattern. As proposed in the class diagram above, I would have added an EventListener to modify the Realm Database whenever an Event was added/deleted from the EventsList instance.</p>
+
+<p><b> Future Features <b></b></b></p>
+
+<p>The application could benefit greatly from integrating the Google Maps API so a user can immediately look up directions to an event directly from the application. The usage of the Yelp API could be flushed out to take into consideration additional factors such as price. Adding an option to allow notes to be attached to an invitation would be helpful. As always, the User Interface could be more appealing to the eye.</p>
+
+<p><b> Concluding Thoughts <b></b></b></p>
+
+<p>Overall, I enjoyed the process of designing a system, implementing it, and then analyzing the final product. I was able to use several design patterns to establish a sustainable and structurally sound architecture, which benefitted the readability and performance of the application. I really enjoyed working with the Yelp API, as it was very easy to use and provided great data. I learned from my mistake of focusing only on implementation rather than revisiting the architectural design once I needed additional data models, and I look forward to improving my software design skills with future projects.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/cpe305/fall2016-project-davidlevitsky">Fall2016-project-davidlevitsky</a> is maintained by <a href="https://github.com/cpe305">cpe305</a>.</span>
