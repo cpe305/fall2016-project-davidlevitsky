@@ -10,7 +10,7 @@ To get a copy of the application, you will need Android Studio Version 2.0 (or h
 
 <b> Running the Application </b>
 
-To run the application, first give Android Studio a few minutes to allow Gradle to sync necessary libraries and process dependencies. Then, simply click the green "Play" button near the top of the browser. If you have an Android device plugged in to your computer, you can download it onto your device. Otherwise, Android Studio will walk you through creating an emulator which you can then use to run the application.
+To run the application, first give Android Studio a few minutes to allow Gradle to sync necessary libraries and process dependencies. You will need to create your own token and key to use for the Yelp API if you wish to use this for development purposes. Then, simply click the green "Play" button near the top of the browser. If you have an Android device plugged in to your computer, you can download it onto your device. Otherwise, Android Studio will walk you through creating an emulator which you can then use to run the application. 
 
 Eventually, the application will be available on the Google Play Store.
 
