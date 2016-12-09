@@ -23,10 +23,10 @@ import java.util.Map;
 import retrofit2.Call;
 
 public class SearchEventYelpActivity extends AppCompatActivity {
-    private final String CONSUMER_KEY= "ZvHAdI9vVMFywK193WST5g";
-    private final String CONSUMER_SECRET = "WacH3p5K75bFz2YL6ooJKDGFIlU";
-    private final String TOKEN = "P0QAwcTA6wxRt77viZno2Ov8wDCzWtAR";
-    private final String TOKEN_SECRET = "xcRAN6Xn69pQKHy008HJyYaeTGM";
+    private final String CONSUMER_KEY= "REPLACE WITH YOUR OWN";
+    private final String CONSUMER_SECRET = "REPLACE WITH YOUR OWN";
+    private final String TOKEN = "REPLACE WITH YOUR OWN";
+    private final String TOKEN_SECRET = "REPLACE WITH YOUR OWN";
     public final int REQUEST_CODE = 200;
     private Button bSearch;
     private EditText etYelpSearchTerm;
